@@ -1,7 +1,59 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <h1>hello</h1>
-    </head>
-    <body>
-    </body>
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+ 
+ <div id="resources-page">
+
+    <div id='res-title'>
+        <h1 class='no-border'>Tom's Resources</h1>
+    </div>
+    
+    <div id='res-grid'>
+        <a href="{% url 'lab:sequence_studies' %}">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static '/lab/array-uv.jpg'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Peptide Arrays: Sequence Studies</h2>
+                </div>
+            </div>
+        </a>
+
+         <a href="">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/strip_cover_square.png'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Peptide Arrays: Figure Strip Generator</h2>
+                </div>
+            </div>
+        </a>
+
+         <a href="">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/reformatter.jpg'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Peptide Arrays: Data Formatter</h2>
+                </div>
+            </div>
+        </a>
+
+         <a href="">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/wheel.png'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Helix Wheel Heatmaps</h2>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

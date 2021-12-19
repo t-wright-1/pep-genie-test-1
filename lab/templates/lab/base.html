@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/lab.css' %}">
+
+        <title>Pep Genie</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    </head>
+    <nav>
+        <div class='logo'>
+            <img src="{% static 'lab/group_logo.png'%}" id="group-logo" alt="Baillie Group Logo">
+        </div>
+        <ul class='nav-links'>
+
+            <li>
+                <a href="">Home</a>
+            </li>
+            <li>
+                <a href="">George</a>
+            </li>
+            <li>
+                <a href="">Blog</a>
+            </li>
+            <li>
+                <a href="">Research</a>
+            </li>
+            <li>
+                <a href="">Team</a>
+            </li>
+            <li>
+                <a href="">Contact</a>
+            </li>
+            <li>
+                <a href="">Resources</a>
+            </li>
+        </ul>
+        <div class='burger' id='burger'>
+            <div class='line1'></div>
+            <div class='line2'></div>
+            <div class='line3'></div>
+        </div>
+
+    </nav>
+    <div class="border-container">
+        <div class="border">
+        </div>
+    </div>
+
+    <div class="my-body">
+
+        {% block content %}{% endblock %}
+    </div>
+
+
+
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer">
+                <a href="https://twitter.com/gbma25?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @gbma25</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <h5>Copyright Tom Wright Webdesign &#9879</h5>
+            </div>
+        </div>
+        
+    </footer>
+
+</html>
+
+
+

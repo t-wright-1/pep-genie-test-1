@@ -1,0 +1,15 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="ss-result-page">
+
+    <h1>Sequence Studies Result</h1>
+    <button class='copy-button' onclick="CopyToClipboard('result-text')">Copy to clipboard</button>
+    <p id='result-text'>{{ result|linebreaksbr }}</p>
+
+</div>
+
+<script src="{% static 'lab/seq_studies.js' %}" type="text/javascript"></script>
+
+{% endblock %}

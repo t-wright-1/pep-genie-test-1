@@ -1,0 +1,53 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="sequence-studies-page">
+
+    <h1>Welcome to Sequence Studies</h1>
+
+    <form action="{% url 'lab:ss_result' %}" method='POST'>
+        {% csrf_token %}
+
+        <div class="seq-form">
+            <h1>Enter Sequence:</h1>
+            <input class="seq-entry" type="text" name="enter-sequence" id="enter-sequence" value='ACDEFGHIKLMNPQRST'>
+
+            <h1>Select Experiments:</h1>
+                <ul class="seq-list">
+                    <li class="">
+                        <label for="ala-scan">Alanine Scan:</label>
+                        <input type="checkbox" name="ala-scan" id="ala-scan" value='true'>
+                    </li>
+                    <li>
+                        <label for="n-trunc">N-Terminal Truncation:</label>
+                        <input type="checkbox" name="n-trunc" id="n-trunc" value='true'>
+                    </li>
+                    <li>
+                        <label for="c-trunc">C-Terminal Truncation:</label>
+                        <input type="checkbox" name="c-trunc" id="c-trunc" value='true'>
+                    </li>
+                    <li>
+                        <label for="n-c-trunc">N- & C-Terminal Truncation:</label>
+                        <input type="checkbox" name="n-c-trunc" id="n-c-trunc" value='true'>
+                    </li>
+                    <li>
+                        <label for="point-sub">Point Substitutions:</label>
+                        <input type="checkbox" name="point-sub" id="point-sub" value='true'>
+                    </li>
+                </ul>
+            <h1>Notation Options:</h1>
+                <div class="s3">
+                    <label for="m-notation">Multipep ".space" Notation?&nbsp;</label>
+                    <input type="checkbox" name="m-notation" id="m-notation" value='true'>
+                </div>
+            <div style="display: flex; justify-content: center;">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}
