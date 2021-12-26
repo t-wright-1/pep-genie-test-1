@@ -1,0 +1,25 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<div style='display: flex; flex-direction: column;'>
+    <div>
+        <img src='{{ heatmap_path }}' style='max-height:50vh; max-width:auto; width:auto;'><br>
+    </div>
+
+    <div style='display:flex; justify-content:space-between;'>
+        <label for='this_array'>Array Format: </label>
+        <button id='this_array'>
+            <a href="{% url 'lab:download_csv_array' %}" style='text-decoration:none; color:black;'> Download File</a>
+        </button>
+    </div>
+    <div style='display:flex; justify-content:space-between;'>
+        <label for='this_array'>Column Format: </label>
+        <button id='this_col'>
+            <a href="{% url 'lab:download_csv_column' %}" style='text-decoration:none; color:black;''> Download File</a>
+        </button>
+    </div>
+</div>
+
+{% endblock %}
+

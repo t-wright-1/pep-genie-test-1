@@ -1,0 +1,24 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+    <form method='post' enctype="multipart/form-data" action='{% url "lab:formatter_result" %}'>
+        {% csrf_token %}
+        {{ form.csv_file.label }}
+        {{ form.csv_file }}<br>
+        <label for='normalisation_box'>Normalise to control csv?</label>
+        <input type='checkbox' name='normalisation' id='normalisation_box' onclick='showControl()' name='normalisation_box' value='True'>
+        {{ form.normalisation.label }}
+        {{ form.normalisation }}<br>
+        <div id='control-div' style='display:none;'>
+            {{ form.csv_file_control.label }}
+            {{ form.csv_file_control }}<br>
+        </div>
+
+        <button type='submit'>Submit</button>
+    </form>
+</div>
+
+<script src="{% static 'lab/formatter.js' %}" type="text/javascript"></script>
+{% endblock %}

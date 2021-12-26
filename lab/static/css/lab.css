@@ -154,6 +154,7 @@ nav{
 .my-body{
 display: flex;
 justify-content: center;
+min-height: 85vh;
 }
 
 .home-page{
@@ -464,6 +465,17 @@ justify-content: center;
   min-height: 85vh;
   width: 100%;
 }
+
+.formatter-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: 1.5% auto auto auto;
+  min-height: 85vh;
+  width: 100%;
+  flex-basis: 50vw;
+}
+
 #res-title{
   margin-left: 3%;
 }
