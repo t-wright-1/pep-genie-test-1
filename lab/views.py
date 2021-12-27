@@ -1,3 +1,4 @@
+from genericpath import exists
 import os
 from django.conf import settings
 from django.shortcuts import render
@@ -71,6 +72,21 @@ def ss_result(request):
     return render(request, "lab/ss_result.html", {"result":res})
 
 def formatter(request):
+    #remove previous csv models and files
+    for model in Csv.objects.all():
+
+        old_file_path = os.path.join(media_root,model.csv_file.name)
+        if os.path.exists(old_file_path):
+            os.remove(old_file_path)
+
+        if model.csv_file_control.name != '/Users/Tom/Python_Projects/project_13/media/empty.csv':
+            old_file_path_control = os.path.join(media_root,model.csv_file_control.name)
+            if os.path.exists(old_file_path_control):
+                os.remove(old_file_path_control)
+
+    Csv.objects.all().delete()
+
+    #continue render
     form = CsvForm()
     return render(request, 'lab/2-1_formatter.html',{'form':form})
 
