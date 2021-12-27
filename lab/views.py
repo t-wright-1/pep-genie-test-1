@@ -99,14 +99,26 @@ def formatter_result(request):
             #pass heatmap to context
             heatmap_path = os.path.join('media', 'heatmap.png')
 
+            #debugging
+            print(os.path.join('media', 'csv_array.csv'))
+            print('Abs path')
+            print('/Users/Tom/Python_Projects/project_13/media/csv_array.csv')
+            print('rel path')
+            print('media/csv_array.csv')
+            print('suggested fix')
+            print(os.path.join(media_root,'csv_array.csv'))
+
+
             return render(request, 'lab/2-2_formatter_result.html', {'heatmap_path':heatmap_path}) 
         else:
             print('NO, form is not valid')
     return render(request, "lab/2-2_formatter_result.html")
 
 def download_csv_array(request):
-    file_path=os.path.join('media','csv_array.csv')
-    if os.path.exists(file_path):
+    #Original error source: file_path=os.path.join('media','csv_array.csv')
+    file_path=os.path.join(media_root,'csv_array.csv')
+
+    if os.path.exists(file_path): #!!!!!!!!!!!!!!!!!
         print('Path Exists')
         with open(file_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="application/default")
@@ -116,7 +128,8 @@ def download_csv_array(request):
     raise Http404
 
 def download_csv_column(request):
-    file_path=os.path.join('media','csv_column.csv')
+    #file_path=os.path.join('media','csv_column.csv')
+    file_path=os.path.join(media_root,'csv_column.csv')
     if os.path.exists(file_path):
         with open(file_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="application/default")

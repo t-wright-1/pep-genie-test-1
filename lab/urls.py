@@ -13,5 +13,4 @@ urlpatterns = [
     path('formatter_result',views.formatter_result, name = 'formatter_result'),
     path('download_csv_array',views.download_csv_array, name = 'download_csv_array'),
     path('download_csv_column',views.download_csv_column, name = 'download_csv_column'),
-    path('download_csv_column',views.download_csv_column, name = 'download_csv_column'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
