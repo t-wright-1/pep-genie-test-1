@@ -107,10 +107,12 @@ def formatter_result(request):
 def download_csv_array(request):
     file_path=os.path.join('media','csv_array.csv')
     if os.path.exists(file_path):
+        print('Path Exists')
         with open(file_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="application/default")
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
+    print('Path does not exist')
     raise Http404
 
 def download_csv_column(request):
