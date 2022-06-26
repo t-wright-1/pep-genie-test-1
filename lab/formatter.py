@@ -21,7 +21,7 @@ import csv
 
 #--------------------------------------------------------------------
 
-def Formatter(file_path, file_path_control, normalisation):
+def Formatter(file_path, file_path_control, normalisation, id_root):
 
     def OpenExtract(my_path):
             
@@ -103,11 +103,13 @@ def Formatter(file_path, file_path_control, normalisation):
 
     #save csv file in array format
     np_array_array = np.asarray(output_list, dtype = object)
-    np.savetxt(output_file_name, np_array_array, delimiter = ',', fmt = '%s')
+    save_path = os.path.join(id_root,'csv_array.csv')
+    np.savetxt(save_path, np_array_array, delimiter = ',', fmt = '%s')
 
     #save csv file in column format
     np_array_col = np.asarray(output_list_2, dtype = object)
-    np.savetxt(output_file_name_2, np_array_col, delimiter = ',', fmt = '%s')
+    save_path = os.path.join(id_root,'csv_column.csv')
+    np.savetxt(save_path, np_array_col, delimiter = ',', fmt = '%s')
 
     #cut data from array
     my_data_1 = np_array_array[1:,1:]
@@ -119,7 +121,7 @@ def Formatter(file_path, file_path_control, normalisation):
     plt.clf()
     my_palette = seaborn.color_palette("viridis", as_cmap=True)
     my_heatmap = seaborn.heatmap(my_data_2,cmap=my_palette, xticklabels=False, yticklabels=False, square=True)
-    my_path = os.path.join(media_root, 'heatmap.png')
+    my_path = os.path.join(id_root, 'heatmap.png')
     plt.savefig(my_path, bbox_inches='tight')
     return None
 

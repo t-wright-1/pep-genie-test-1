@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/lab2.css' %}">
+
+        <title>Pep Genie</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <div id='inner-body'>
+            <nav>
+                <a href="{% url 'lab:index' %}">
+                    <div class='logo'>
+                        <img src="{% static 'lab/logo2.JPG'%}"  id="" alt="">
+                    </div>
+                 </a>
+                <ul id='nav-ul' class='nav-ul'>
+                    <li><a href="{% url 'lab:index' %}">Home</a></li>
+                    <li><a href="{% url 'lab:george' %} ">George</a></li>
+                    <li><a href="{% url 'lab:team' %} ">Team</a></li>
+                    <li><a href="{% url 'lab:news' %}">News</a></li>
+                    <li><a href="{% url 'lab:resources' %}">Resources</a></li>
+                    <li><a href="">Contact</a></li>
+                </ul>
+                <box-icon onclick="showMenu()" id='menu' name='menu' style='cursor:pointer;'color="#007994" size='lg'></box-icon>
+            </nav>
+
+            {% block content %}{% endblock %}
+
+            <footer>
+                <div class='icon-grey'>
+                    <img src="{% static 'lab/icon-grey.jpg'%}"  id="" alt="">
+                </div>
+                <p>COPYWRITE BAILLIE GROUP 2022</P>
+            </footer>
+        </div>
+    </body>
+
+
+
+
+
+  
+
+</html>
+<script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+<script src="{% static 'lab/index.js' %}" type="text/javascript"></script>
+
+
+

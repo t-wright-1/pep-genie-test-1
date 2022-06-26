@@ -1,0 +1,180 @@
+{% extends 'lab/base2.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="team-page" style='padding:2vw'>
+
+
+
+
+    <h1 style="margin-top:0vh">Our Team</h1>
+    <div class="team-top-panel">
+        <div class="team-sub-panel">
+            <h2>Principal Investigator</h2>
+            <form action="{% url 'lab:george'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    
+                    <div class='card-img' style="margin:auto">
+                        <img src="{% static 'lab/george.jpg'%}"  id="" alt="">
+                    </div>
+                    <div class='card-content'>
+                        <h3>Prof. George Baillie</h3>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="team-sub-panel">
+            <h1>Lab Manager</h1>
+            <form action="{% url 'lab:george'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    
+                    <div class='card-img' style="margin:auto">
+                        <img src="{% static 'lab/george.jpg'%}"  id="" alt="">
+                    </div>
+                    <div class='card-content'>
+                        <h3>Gillian Lappin</h3>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="team-panel">
+        {% for member in PI  %}
+            <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="{{ member.name }}">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    <div class='card-img'>
+                        <img src='{{ member.profile.url }}'>
+                    </div>
+                    <div class='card-content'>
+                        <h3>{{member.name}}</h3>
+                    </div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+
+
+
+    <h1>Postdoctoral Researchers</h1>
+    
+    <div class="team-panel">
+        {% for member in post_docs  %}
+            <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="{{ member.name }}">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    <div class='card-img'>
+                        <img src='{{ member.profile.url }}'>
+                    </div>
+                    <div class='card-content'>
+                        <h3>{{member.name}}</h3>
+                    </div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+
+
+    <h1>PostGraduate Researchers</h1>
+
+    <div class="team-panel">
+        {% for member in phds  %}
+            <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="{{ member.name }}">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    <div class='card-img'>
+                        <img src='{{ member.profile.url }}'>
+                    </div>
+                    <div class='card-content'>
+                        <h3>{{member.name}}</h3>
+                    </div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+
+    <h1>Masters Students</h1>
+
+    <div class="team-panel">
+        {% for member in masters  %}
+            <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="{{ member.name }}">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    <div class='card-img'>
+                        <img src='{{ member.profile.url }}'>
+                    </div>
+                    <div class='card-content'>
+                        <h3>{{member.name}}</h3>
+                    </div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+
+
+    <h1>Lab Manager</h1>
+
+    <div class="team-panel">
+        {% for member in lab_managers  %}
+            <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="{{ member.name }}">
+
+                <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                    <div class='card-img'>
+                        <img src='{{ member.profile.url }}'>
+                    </div>
+                    <div class='card-content'>
+                        <h3>{{member.name}}</h3>
+                    </div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+
+
+    {% if member in lab_techs%}
+        <h1>Lab Tech</h1>
+
+        <div class="team-panel">
+            {% for member in lab_techs  %}
+                <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                    {% csrf_token %}
+                    <input type='hidden' name='team-input' value="{{ member.name }}">
+    
+                    <div class="team-card" onclick="javascript:this.parentNode.submit();">
+                        <div class='card-img'>
+                            <img src='{{ member.profile.url }}'>
+                        </div>
+                        <div class='card-content'>
+                            <h3>{{member.name}}</h3>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+
+
+{% endblock %}

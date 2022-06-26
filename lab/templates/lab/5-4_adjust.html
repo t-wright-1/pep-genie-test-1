@@ -1,0 +1,75 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<div class="align-body">
+
+    {% if my_model %}
+    <div class='fig-hidden'>
+        <img src="{{ my_model.crop_image.url}}" alt="" id="arrayId" style="display: none">
+    </div>
+    {% endif %}
+
+
+    <form action="{% url 'lab:auto_crop_result'%}" method="post" class="align-form">
+        {% csrf_token %}
+        <input type='hidden' name='coordX1' id='coordX1'/>
+        <input type='hidden' name='coordY1' id='coordY1'/>
+        <input type='hidden' name='coordX2' id='coordX2'/>
+        <input type='hidden' name='coordY2' id='coordY2'/>
+
+        <input type='submit' onclick='saveCoordsSubmit()' name='align-submit' value='Submit' id=''/>
+
+    </form>
+
+    <!--<h1>{{my_model.overlay_image.url}}</h1>-->
+
+
+
+    <div class="align-canvas" id="align-canvas">
+        <div class='rectangle' id="grid-div" style="position: relative; top:{{top}}; left:{{left}}; width:{{width}}; height:{{height}}; background-image: url('media/{{ my_model.full_grid.name }}')  "></div>
+        <div class="resize-handle-se" style="position: relative;top:{{se_top}};left:{{se_left}};" id='resize-handle-se'></div>
+    </div>
+    
+</div>
+
+
+
+<script src="{% static 'lab/auto_crop_adjust.js' %}" type="text/javascript"></script>
+
+<script>
+    function loadCanvas(canvasId, arrayId) {
+        const canvas = document.getElementById(canvasId);
+        const arrayImage = document.getElementById(arrayId);
+        const viewPortHeight = window.innerHeight;
+        const viewPortWidth = window.innerWidth;
+        canvas.style.background = 'url( "{{ my_model.crop_image.url }}" ) no-repeat';
+        canvas.style.backgroundSize = '100% 100%';
+
+        canvas.style.height = (0.95 * viewPortHeight)+'px';
+        canvas.style.width = ((arrayImage.width/arrayImage.height) * (0.95 * viewPortHeight)+'px');
+        console.log('{{my_model.crop_image.url}}')
+    }
+    function time() {
+        setTimeout(loadCanvas('align-canvas', 'arrayId'), 0)
+    }
+    window.addEventListener('load',time);
+
+    beginDrawing(document.getElementById("align-canvas"));
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

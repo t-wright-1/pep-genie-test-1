@@ -1,0 +1,19 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<div style='display: flex; flex-direction: column;'>
+    <div>
+        <img src='{{ my_model.cropped_image.url }}' style='max-height:50vh; max-width:auto; width:auto;'><br>
+    </div>
+
+</div>
+<div style='display:flex; justify-content:space-between;'>
+    <label for='this_array'>Download: </label>
+    <button id='this_col'>
+        <a href="{% url 'lab:auto_crop_download' %}" style='text-decoration:none; color:black;'> Download File</a>
+    </button>
+</div>
+
+{% endblock %}
+

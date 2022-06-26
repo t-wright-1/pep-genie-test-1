@@ -1,0 +1,10 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<form method="POST" class="" action='{% url "lab:crop_grid" %}' enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="">Save</button>
+</form>
+
+{% endblock %}

@@ -123,3 +123,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+STRIPS_ROOT = os.path.join(MEDIA_ROOT, 'strips')
+
+STATIC_FOLDER = os.path.join(STATIC_URL,'lab')
+
+
+LAB_ROOT = os.path.join(BASE_DIR, 'lab')
+LAB_STATIC = os.path.join(LAB_ROOT, 'static')
+LAB_STATIC_ROOT = os.path.join(LAB_STATIC, 'lab')
+

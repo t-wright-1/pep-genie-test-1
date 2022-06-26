@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/lab.css' %}">
+
+        <title>Pep Genie</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    </head>
+
+    <div class='seven-nav'>
+        <div class='seven-logo'>
+            <img src="{% static 'lab/group_logo.png'%}" id="seven-logo" alt="Baillie Group Logo">
+        </div>
+        <div>
+            <h2>Step 1) Upload Files</h2>
+        </div>
+        <ul class='seven-res-link'>
+            <li>
+                <a href="{% url 'lab:resources' %}">Resources</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="border-container">
+        <div class="border">
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="my-body">
+        <div style='display: flex; flex-direction: column; justify-content:flex-start'>
+
+            <form method="POST" style='margin-top: 20px;'class="strip-1" action='{% url "lab:strip_2a" %}' enctype="multipart/form-data">{% csrf_token %}
+                {% csrf_token %}
+                
+
+                {{ form.test_image.label }}
+                {{ form.test_image }}<br>
+
+                {{ form.mock_image.label }}
+                {{ form.mock_image }}<br>
+
+                <label for='auto_mock_box'>3) Automatically Handle Mock?</label>
+                <input type='checkbox' id='auto_mock' onclick='showMock()' name='auto_mock_box' value='True'><br>
+
+                <div id='mock-div' style='display:none;'>
+                    {{ form.vis.label }}<br>
+                    {{ form.vis }} 
+                </div>
+
+                <div id='mock-div' style='display:none;'>
+                    <div style='display: flex; justify-content: flex-start;'>
+                        <div style='width: 50px' class='show?'>
+                        </div>
+                        <div>
+                            {{ form.vis.label }}<br>
+                            {{ form.vis }} 
+                        </div>
+                    </div>
+                </div>
+
+
+                {{ form.rows.label }}
+                {{ form.rows }}<br>
+                {{ form.cols.label }}
+                {{ form.cols }}<br>
+                {{ form.first_col.label }}
+                {{ form.first_col }}<br>
+                {{ form.strip_request.label }}
+                {{ form.strip_request }}<br>
+
+
+
+
+
+                <button type="submit" class="">Save</button>
+
+
+            </form>
+            <div class='seven-logo'>
+                <img src="{% static 'lab/george-genie.png'%}" style='width:400px' id="" alt="">
+            </div>
+        </div>
+    </div>
+</html>
+
+<script src="{% static 'lab/7-1_upload.js' %}" type="text/javascript"></script>
+
+

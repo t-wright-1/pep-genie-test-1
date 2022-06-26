@@ -1,0 +1,74 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="align-body">
+
+    <div id='vis-1' class='vis-div'>
+    </div>
+    <div id='vis-2' class='vis-div'>
+    </div>
+    <div id='vis-3' class='vis-div'>
+    </div>
+    <div id='vis-4' class='vis-div'>
+    </div>
+
+    {% if my_model %}
+    <div class='fig-hidden'>
+        <img src="{{ my_model.vis.url}}" alt="" id="arrayId" style="display: none">
+    </div>
+    {% endif %}
+
+
+    <form action="{% url 'lab:auto_crop_grid'%}" method="post" class="align-form">
+        {% csrf_token %}
+        <input type='hidden' name='vis-coords' id='vis-coords'/>
+        <input type='submit' onclick='saveCoordsSubmit()' name='align-submit' value='Submit' id=''/>
+    </form>
+
+    <!--<h1>{{my_model.overlay_image.url}}</h1>-->
+
+
+
+    <div class="align-canvas" id="align-canvas">
+    </div>
+    
+</div>
+
+
+
+
+
+<script src="{% static 'lab/vis_trn.js' %}" type="text/javascript"></script>
+
+<script>
+    function loadCanvas(canvasId, arrayId) {
+
+        const canvas = document.getElementById(canvasId);
+        const arrayImage = document.getElementById(arrayId);
+        const viewPortHeight = window.innerHeight;
+        const viewPortWidth = window.innerWidth;
+        canvas.style.background = 'url("media/{{ my_model.vis.name }}") no-repeat';
+        canvas.style.backgroundSize = '100% 100%';
+
+        canvas.style.height = (0.95 * viewPortHeight)+'px';
+        canvas.style.width = ((arrayImage.width/arrayImage.height) * (0.95 * viewPortHeight)+'px');
+        console.log('{{my_model.vis.url}}')
+    }
+    function time() {
+        setTimeout(loadCanvas('align-canvas', 'arrayId'), 0)
+    }
+    window.addEventListener('load',time);
+
+    setDivs(document.getElementById('align-canvas'))
+
+
+</script>
+
+
+
+
+
+{% endblock %}

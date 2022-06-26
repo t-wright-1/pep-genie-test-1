@@ -1,0 +1,61 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<form method="POST" class="" action='{% url "lab:wheel_result" %}' enctype="multipart/form-data">{% csrf_token %}
+    {% csrf_token %}
+    
+
+    {{ form.sequence.label }}
+    {{ form.sequence }}<br>
+
+    {{ form.first_res.label }}
+    {{ form.first_res }}<br>
+
+    <h4>Colour Mode:</h4>
+    <div style='display:flex; justify-content:flex-start'>
+        <div style='width: 50px'>
+        </div>
+        <div>
+            <input type='radio' id='polarity' onclick='showMock()' name='surface_box' value='False' required>
+            <label for='polarity_box'>By Residue Polarity</label><br>
+            <input type='radio' id='surface' onclick='showMock()' name='surface_box' value='True'>
+            <label for='surface_box'>By Surface Data Input</label><br>
+        </div>
+    </div>
+
+    <div id='surface-div' style='display:none;'>
+        <div style='display:flex; justify-content:flex-start'>
+            <div style='width: 50px'>
+            </div>
+            <div>
+                {{ form.surface_data.label }}
+                {{ form.surface_data }}         
+            </div>
+        </div>
+    </div><br>
+
+    {{ form.colour_scheme.label }}
+    <div style='display:flex; justify-content:flex-start'>
+        <div style='width: 50px'>
+        </div>
+        <div id='colour-scheme' style='list-style:none'>
+                {{ form.colour_scheme }} 
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <button type="submit" class="">Save</button>
+
+
+</form>
+
+<script src="{% static 'lab/3-upload.js' %}" type="text/javascript"></script>
+<script src="{% static 'lab/3-clearbox.js' %}" type="text/javascript" defer></script>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'lab/base2.html' %}
+{% load static %}
+{% block content %}
+ 
+ <div id="resources-page">
+
+    <div id='res-title'>
+        <h1 class='no-border'>Tom's Resources</h1>
+    </div>
+    
+    <div id='res-grid'>
+        
+        
+        
+        <a href="{% url 'lab:strip_1' %}">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/strip_cover_square.png'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Strip-Generator Full Suite</h2>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'lab:crop_upload' %}">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/strip_cover_square.png'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Module: Manual Crop</h2>
+                </div>
+            </div>
+        </a>
+
+         <a href="{% url 'lab:auto_crop_upload' %}">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/strip_cover_square.png'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Module: Auto Crop</h2>
+                </div>
+            </div>
+        </a>
+
+         <a href="{% url 'lab:strip_upload' %}">
+            <div class='res-card'>
+                <div class='res-pic'>
+                    <img src="{% static 'lab/strip_cover_square.png'%}" class="" id="">
+                </div>
+                <div class='res-text'>
+                    <h2>Module: PPT Generator</h2>
+                </div>
+            </div>
+        </a>
+
+
+    </div>
+</div>
+
+{% endblock %}

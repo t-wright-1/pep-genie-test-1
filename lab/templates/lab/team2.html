@@ -1,0 +1,256 @@
+{% extends 'lab/base2.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="team-page" style='padding:2vw'>
+
+    <div id='team-page-title'>
+        <h1>Team Members</h1>
+    </div>
+
+    <div id='team-panel-top'>
+
+        <div class='team-subpanel-top'>
+
+            <div class='team-title-top'>
+                <h2>Principal Investigator</h2>
+            </div>
+            <form action="{% url 'lab:george'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <div class='team-card-top' onclick="javascript:this.parentNode.submit();">
+                    <div class='team-card-top-img'>
+                        <img src="{% static 'lab/george.jpg'%}"  id="" alt="">
+                    </div>
+                    <div class='team-card-title'>
+                        <h3>Prof. George Baillie</h3>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class='team-subpanel-top'>
+
+            <div  class='team-title-top'>
+                <h2>Lab Manager</h2>
+            </div>
+            <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                {% csrf_token %}
+                <input type='hidden' name='team-input' value="{{ lab_manager.name }}">
+
+                <div class='team-card-top' onclick="javascript:this.parentNode.submit();">
+                    <div class='team-card-top-img'>
+                        <img src="{{ lab_manager.profile.url }}"  id="" alt="">
+                    </div>
+                    <div class='team-card-title'>
+                        <h3>{{lab_manager.name}}</h3>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+    {% if post_doc_filled %}
+        <div class='team-panel'>
+
+
+            <div class='team-panel-title'>
+                <h2>Postdoctoral Researchers</h2>
+            </div>
+            <div class='team-subpanel'>
+
+                {% for member in post_docs  %}
+                    <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                        {% csrf_token %}
+                        <input type='hidden' name='team-input' value="{{ member.name }}">
+
+
+                        <div class='team-card' onclick="javascript:this.parentNode.submit();">
+                            <div class='team-card-img'>
+                                <img src='{{ member.profile.url }}'>
+                            </div>
+                            <div class='team-card-title'>
+                                <h3>{{member.name}}</h3>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+
+            </div>  
+        </div>
+    {% endif %}
+
+
+    {% if phds_filled %}
+        <div class='team-panel'>
+
+
+            <div class='team-panel-title'>
+                <h2>Postgraduate Researchers</h2>
+            </div>
+            <div class='team-subpanel'>
+
+                {% for member in phds  %}
+                    <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                        {% csrf_token %}
+                        <input type='hidden' name='team-input' value="{{ member.name }}">
+
+
+                        <div class='team-card' onclick="javascript:this.parentNode.submit();">
+                            <div class='team-card-img'>
+                                <img src='{{ member.profile.url }}'>
+                            </div>
+                            <div class='team-card-title'>
+                                <h3>{{member.name}}</h3>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+
+            </div>  
+        </div>
+
+    {% endif %}
+
+    {% if masters_filled %}
+        <div class='team-panel'>
+
+
+            <div class='team-panel-title'>
+                <h2>Masters Students</h2>
+            </div>
+            <div class='team-subpanel'>
+
+                {% for member in masters  %}
+                    <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                        {% csrf_token %}
+                        <input type='hidden' name='team-input' value="{{ member.name }}">
+
+
+                        <div class='team-card' onclick="javascript:this.parentNode.submit();">
+                            <div class='team-card-img'>
+                                <img src='{{ member.profile.url }}'>
+                            </div>
+                            <div class='team-card-title'>
+                                <h3>{{member.name}}</h3>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+
+            </div>  
+        </div>
+
+    {% endif %}
+
+    {% if lab_techs_filled %}
+        <div class='team-panel'>
+
+
+            <div class='team-panel-title'>
+                <h2>Lab Technicians</h2>
+            </div>
+            <div class='team-subpanel'>
+
+                {% for member in lab_techs  %}
+                    <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                        {% csrf_token %}
+                        <input type='hidden' name='team-input' value="{{ member.name }}">
+
+
+                        <div class='team-card' onclick="javascript:this.parentNode.submit();">
+                            <div class='team-card-img'>
+                                <img src='{{ member.profile.url }}'>
+                            </div>
+                            <div class='team-card-title'>
+                                <h3>{{member.name}}</h3>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+
+            </div>  
+        </div>
+
+    {% endif %}
+
+
+
+
+
+
+
+<!--
+
+
+            {% for member in PI  %}
+                <form action="{% url 'lab:member'%}" method="post" class="team-form">
+                    {% csrf_token %}
+                    <input type='hidden' name='team-input' value="{{ member.name }}">
+
+                    <div class='team-card'>
+                        <div class='team-card-img'>
+                            <img src='{{ member.profile.url }}'>
+                        </div>
+                        <div class='team-card-title'>
+                            <h3>{{ member.name }}</h3>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+
+
+            <div class='team-card'>
+                <div class='team-card-img'>
+                    <img src="{% static 'lab/profilea.jpg'%}"  id="" alt="">
+                </div>
+                <div class='team-card-title'>
+                    <h3>Gillian Lappin</h3>
+                </div>
+            </div>
+
+            <div class='team-card'>
+                <div class='team-card-img'>
+                    <img src="{% static 'lab/profilea.jpg'%}"  id="" alt="">
+                </div>
+                <div class='team-card-title'>
+                    <h3>Gillian Lappin</h3>
+                </div>
+            </div>
+
+            <div class='team-card'>
+                <div class='team-card-img'>
+                    <img src="{% static 'lab/profilea.jpg'%}"  id="" alt="">
+                </div>
+                <div class='team-card-title'>
+                    <h3>Gillian Lappin</h3>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+-->
+
+
+</div>
+
+
+
+
+
+{% endblock %}

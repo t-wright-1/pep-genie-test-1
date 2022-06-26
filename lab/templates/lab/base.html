@@ -4,6 +4,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/lab.css' %}">
+        <link rel="stylesheet" href="{% static 'css/lab2.css' %}">
 
         <title>Pep Genie</title>
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,7 +21,7 @@
         <ul class='nav-links'>
 
             <li>
-                <a href="">Home</a>
+                <a href="{% url 'lab:index' %}">Home</a>
             </li>
             <li>
                 <a href="">George</a>

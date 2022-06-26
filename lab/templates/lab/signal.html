@@ -1,0 +1,38 @@
+{% extends 'lab/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="signal-upload-page">
+
+    <div style='display: flex; flex-direction: column; justify-content:flex-start; align-items:center;'>
+
+        <form method="POST" class="signal-1" action='{% url "lab:signal_2" %}' enctype="multipart/form-data">
+            
+            {% csrf_token %}
+            
+
+            {{ form.img.label }}
+            {{ form.img }}<br>
+
+            {{ form.rows.label }}
+            {{ form.rows }}<br>
+            {{ form.cols.label }}
+            {{ form.cols }}<br>
+            {{ form.first_col.label }}
+            {{ form.first_col }}<br>
+
+
+            <button type="submit" class="">Save</button>
+
+
+        </form>
+        <div class='seven-logo'>
+            <img src="{% static 'lab/george-genie.png'%}" style='width:400px' id="" alt="">
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
