@@ -154,7 +154,7 @@ nav{
 .my-body{
 display: flex;
 justify-content: center;
-min-height: 85vh;
+min-height: 80vh;
 }
 
 .home-page{
@@ -582,7 +582,7 @@ min-height: 85vh;
 }
 
 .align-canvas{
-  border: 1px grey solid
+  border: 0px grey solid;
 }
 
 .fig-hidden{

@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Csv, SignalModel
+from .models import Csv, SignalModel, SDModel
 from .models import CropModel
 from .models import AutoCropModel
 from .models import StripModel
@@ -104,3 +104,29 @@ class SignalModelForm(forms.ModelForm):
         "rows": "Number of Rows",
         "first_col": "Number of First Column",
         }
+class SignalModelForm2(forms.ModelForm):
+    class Meta:
+        model = SignalModel
+        fields = ('strip_request','rows')
+        labels = {
+        "strip_request": "If you want to generate graphs, please enter the strips you want:",
+        }
+ 
+
+
+
+
+class SDModelForm(forms.ModelForm):
+    class Meta:
+        model = SDModel
+        fields = ('img_1','img_2','cols','first_col','strip_request','graph_types','norm')
+        labels = {
+        "img_1": "Test Array Image:",
+        "img_2": "Control Array Image:",
+        "cols": "Number of Columns in Array:",
+        "first_col": "Number of First Column:",
+        "strip_request": "Enter Your Desired Strips:",
+        "graph_types": "Enter the Type of Graph for Each Strip:",
+        "norm": "Normalise test array signals to control?",
+        }
+ 

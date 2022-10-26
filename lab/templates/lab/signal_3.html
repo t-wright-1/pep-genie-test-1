@@ -15,4 +15,22 @@
     </button>
 </div>
 
+
+
+
+<div style='display: flex; flex-direction: column; justify-content:flex-start; align-items:center;'>
+    <form method="POST" class="signal-1" action='{% url "lab:signal_5" %}'>
+        
+        {% csrf_token %}
+        
+
+        {{ form.strip_request.label }}
+        {{ form.strip_request }}<br>
+
+        <button type="submit" class="">Enter Strips</button>
+
+
+    </form>
+</div>
+
 {% endblock %}

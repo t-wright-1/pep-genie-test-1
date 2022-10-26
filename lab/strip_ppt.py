@@ -1,13 +1,14 @@
 from dis import dis
 from PIL import Image, ImageDraw
-from pptx import Presentation
+from pptx import Presentation 
+from pptx.enum.text import PP_ALIGN
 from pptx.util import Cm
 import os
 
 from django.conf import settings
 media_root = settings.MEDIA_ROOT
 
-def stripper(image_path, rows, cols, strips):
+def stripper(image_path, graph_type_list, rows, cols, strips):
     #variables
     my_image = Image.open(image_path)
     old_width, old_height = my_image.size
@@ -47,7 +48,6 @@ def stripper(image_path, rows, cols, strips):
     # convert input string to number tuple
     output_strips = []
     for number_pair in strips:
-        print(number_pair)
         new_strip = []
         new_strip.append(number_pair[0]-1)
         new_strip.append(number_pair[1])
@@ -68,20 +68,23 @@ def stripper(image_path, rows, cols, strips):
                 draw.line(xy, fill='black', width=3)
             index_counter += 1
             counter +=1
+        if graph_type_list[strips.index(number_pair)] == 'v':
+            new_image = new_image.transpose(Image.ROTATE_90)
+            new_image = new_image.resize((height*image_number,width)) 
+            print(new_image.size, graph_type_list)
         output_strips.append(new_image) 
         width, height = output_strips[0].size 
 
     return output_strips
 
-def make_pptx(test_list,strip_request,user_dir,user_id):
+def make_pptx(test_list, graph_type_list,strip_request,user_dir,user_id):
     prs = Presentation()
     
     prs.slide_width = Cm(33.9)
     prs.slide_height = Cm(19.1)
-    left = Cm(2)
-    left_mock = Cm(1)
-    top = Cm(1)
-    width = Cm(0.7)
+    
+
+
 
     for i in range(len(test_list)):
         #get number of slices for height calculation
@@ -89,21 +92,68 @@ def make_pptx(test_list,strip_request,user_dir,user_id):
         new_strip.append(strip_request[i][0]-1)
         new_strip.append(strip_request[i][1])
         image_number = new_strip[1]-new_strip[0]
-        height = Cm(((19.1*0.7)/20)*image_number)
-        
+        long = Cm(((20.3*0.7)/20)*image_number)
+        short = Cm(0.7)
+        #account for vertical vs horizontal
+        if graph_type_list[i] == 'h': #functional
+            width = short
+            height = long
+            left = Cm(8) #one cm before
+            left_mock = Cm(7)
+            top = Cm(3)
+            top_mock = Cm(3)
+            
+            text_left = Cm(6.75)
+            text_top = Cm(2)
+            text_width = Cm(1)
+            text_height = Cm(1)
+            text_align = PP_ALIGN.LEFT
+            text_rotation = -90.0
+            text_left_factor = Cm(1.1)
+            text_top_factor = Cm(0)
 
+        elif graph_type_list[i] == 'v': 
+            width = long
+            height = short
+            left = Cm(9.5) #one cm before
+            left_mock = Cm(9.5)
+            top = Cm(15) #
+            top_mock = Cm(16) #
+ 
+            text_left = Cm(2.5)
+            text_top = Cm(14.9)
+            text_width = Cm(7)
+            text_height = Cm(1)
+            text_align = PP_ALIGN.RIGHT
+            text_rotation = 0
+            text_left_factor = Cm(0)
+            text_top_factor = Cm(0.9)
 
         slide = prs.slides.add_slide(prs.slide_layouts[5])
 
-        title_placeholder = slide.shapes.title
-        title_placeholder.text = str(strip_request[i])
-
         my_file_name = 'strip_' + str(i) + '.png'
         my_path = os.path.join(user_dir, my_file_name)
+        print(width,height)
         img=slide.shapes.add_picture(my_path,left,top,width,height)
 
         my_file_name_mock = 'mock_strip_' + str(i) + '.png'
         my_path_mock = os.path.join(user_dir, my_file_name_mock)
-        img=slide.shapes.add_picture(my_path_mock,left_mock,top,width,height)
+        img = slide.shapes.add_picture(my_path_mock,left_mock,top_mock,width,height)
+
+        #add labels for strips
+        txBox = slide.shapes.add_textbox(text_left, text_top, text_width, text_height)
+        tf = txBox.text_frame
+        tf.text = "Control"
+        txBox.rotation = text_rotation
+        txBox.text_frame.paragraphs[0].alignment = text_align
+        
+        txBox2 = slide.shapes.add_textbox(text_left+text_left_factor, text_top+text_top_factor, text_width, text_height)
+        tf2 = txBox2.text_frame
+        tf2.text = "Overlay"
+        txBox2.rotation = text_rotation
+        txBox2.text_frame.paragraphs[0].alignment = text_align
+
     my_filename = 'presentation_'+user_id+'.pptx'
     prs.save(os.path.join(user_dir,my_filename))
+
+#second function customised for sd

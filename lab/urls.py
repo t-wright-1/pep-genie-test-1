@@ -55,5 +55,13 @@ urlpatterns = [
     path('signal_2',views.signal_2, name = 'signal_2'),
     path('signal_3',views.signal_3, name = 'signal_3'),
     path('signal_4',views.signal_4, name = 'signal_4'),
+    path('signal_5',views.signal_5, name = 'signal_5'),
+    path('signal_6',views.signal_6, name = 'signal_6'),
+
+    path('sd_upload',views.sd_upload, name = 'sd_upload'),
+    path('sd_validate',views.sd_validate, name = 'sd_validate'),
+    path('sd_redirect',views.sd_redirect, name = 'sd_redirect'),
+    path('sd_result',views.sd_result, name = 'sd_result'),
+    path('sd_download',views.sd_download, name = 'sd_download'),
  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

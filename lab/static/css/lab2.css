@@ -686,3 +686,16 @@ flex: 0 1 calc(25%-1em);
     margin-top:20px;
 
 }
+
+.rectangle{
+    background-size: 100% 100%;
+  }
+
+.resize-handle-se {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 78, 97, 0.4);
+    z-index: 999;
+}

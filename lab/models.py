@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_image_file_extension
 
 import datetime
 import os
@@ -181,5 +182,43 @@ class SignalModel(models.Model):
     crop_coords = models.CharField(max_length=200, default = 'empty')
     img = models.FileField(upload_to=signal_dir)
     img_crop = models.ImageField(upload_to=signal_dir,default=dummy_url, null=True)
-    strip_request = models.CharField(max_length=100, default='A08-T08,A09-T09')
+    strip_request = models.CharField(max_length=1000, default='A08-T08,A09-T09')
+    graph_types = models.CharField(max_length=1000, default='null')
+    dens_list = models.CharField(max_length=1000, default='null')
     csv = models.FileField(upload_to=signal_dir)
+
+
+
+
+
+def sd_dir(instance, filename):
+    return '{0}/{1}/{2}'.format('sd',instance.user_id,filename)
+
+class SDModel(models.Model):
+
+    #form 
+    cols = models.IntegerField(default=4)
+    first_col = models.IntegerField(default=8)
+    strip_request = models.CharField(max_length=1000, default='A08-T08,A09-T09')
+    graph_types = models.CharField(max_length=1000, default='v')
+    norm = models.BooleanField(default=False)
+
+    img_1 = models.FileField(upload_to=sd_dir, validators=[validate_image_file_extension])
+    img_1_crop = models.ImageField(upload_to=sd_dir,default=dummy_url, null=True)
+    img_1_coords = models.CharField(max_length=200, default = 'empty')
+    img_1_csv = models.FileField(upload_to=sd_dir)
+
+    img_2 = models.FileField(upload_to=sd_dir)
+    img_2_crop = models.ImageField(upload_to=sd_dir,default=dummy_url, null=True)
+    img_2_coords = models.CharField(max_length=200, default = 'empty')
+    img_2_csv = models.FileField(upload_to=sd_dir)
+
+    #gen
+    user_id = models.CharField(max_length=100)
+    ppt_path = models.CharField(max_length=100)
+    full_grid = models.ImageField(upload_to=sd_dir,default=dummy_url)
+    dens_list = models.CharField(max_length=1000, default='null')
+    config = models.CharField(max_length=1000, default="{'c':0}") #user_id,  
+    normalised_csv = models.FileField(upload_to=sd_dir)   
+
+

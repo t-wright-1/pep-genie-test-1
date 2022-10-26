@@ -1,0 +1,15 @@
+<h1>Hello</h1>
+<h1>{{ my_model.strip_request }}</h1>
+
+<div style='display: flex; flex-direction: column; justify-content:flex-start; align-items:center;'>
+
+    <form method="POST" class="signal-1" action='{% url "lab:signal_6" %}'>
+        {% csrf_token %}
+        {% for strip in strip_list %}
+            <h1>{{strip}}</h1>
+            <input type="radio" name={{ forloop.counter }} value="disc" checked='checked'>Discovery Array<br>
+            <input type="radio" name={{ forloop.counter }} value="ala">Alanine Scan<br>
+            <input type="radio" name={{ forloop.counter }} value="trunc">Truncations<br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>

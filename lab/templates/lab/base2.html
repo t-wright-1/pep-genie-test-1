@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <link rel="stylesheet" href="{% static 'css/lab2.css' %}">
 
         <title>Pep Genie</title>
@@ -15,7 +16,7 @@
     </head>
     
     <body>
-        <div id='inner-body'>
+        <div id='inner-body' style='overflow-x: hidden;'>
             <nav>
                 <a href="{% url 'lab:index' %}">
                     <div class='logo'>

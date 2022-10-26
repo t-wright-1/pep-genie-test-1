@@ -4,7 +4,9 @@ import cv2
 import numpy as np
 import ast
 import os
+import zipfile
 from PIL import Image, ImageStat, ImageDraw, ImageOps
+import matplotlib.pyplot as plt
 
 from django.conf import settings
 media_root = settings.MEDIA_ROOT
@@ -204,7 +206,8 @@ def make_ppt(test_list, mock_list):
 def slice_to_list(my_image, rows, cols):
     #variables
     #my_image = Image.open(image_path)
-    old_width, old_height = my_image.size
+    old_width, old_height = my_image.size #was issue opening image from model, but 
+                                        # now I am supplying the PIL file
 
     #resize cropped image
     if old_height <= 400:
@@ -272,3 +275,217 @@ def circle_crop(im, mask):
 def measure_darkness(im):
     stat = ImageStat.Stat(im)
     return stat.mean[0]
+
+
+
+   
+
+
+
+
+def stripper2(image_path, graph_type_list, rows, cols, strips):
+    #variables
+    my_image = Image.open(image_path)
+    old_width, old_height = my_image.size
+
+    #resize cropped image
+    new_width = int( (1000 / old_height) * old_width )
+    my_image = my_image.resize((new_width, 1000))
+
+    #resized image variables
+    width, height = my_image.size
+    slice_height = height / rows
+    slice_width = width / cols
+    upper = 0
+    left = 0
+
+    #cut cropped image into squares/slices
+    count = 1
+    slice_list = []
+    for col in range(cols):
+        right = (col+1)* slice_width
+        for row in range(rows):
+            if count == rows:
+                lower = height
+            else:
+                lower = int(count * slice_height)
+            bbox = (left, upper, right, lower)
+            working_slice = my_image.crop(bbox)
+            upper += int(slice_height)
+            slice_list.append(working_slice)
+            my_width, my_height = working_slice.size
+            #print(count, my_height, lower, upper)
+            count += 1
+        left += slice_width
+        upper = 0
+        count = 1
+
+    # convert input string to number tuple
+    output_strips = []
+    for number_pair in strips:
+        new_strip = []
+        new_strip.append(number_pair[0]-1)
+        new_strip.append(number_pair[1])
+        image_number = new_strip[1]-new_strip[0]
+
+        #Make strip canvas and join squares/slices
+        width, height = slice_list[0].size
+
+        new_image = Image.new('RGB', (width, height * image_number))
+
+        counter = 0
+        index_counter = new_strip[0]+1
+        for image in slice_list[new_strip[0]:new_strip[1]]:
+            new_image.paste(image,(0,counter*height))
+            if ((index_counter-1)/20).is_integer() and counter != 0:
+                xy = (0,counter*height,width,counter*height)
+                draw = ImageDraw.Draw(new_image)
+                draw.line(xy, fill='black', width=3)
+            index_counter += 1
+            counter +=1
+        if graph_type_list[strips.index(number_pair)] == 'v':
+            new_image = new_image.transpose(Image.ROTATE_90)
+            new_image = new_image.resize((height*image_number,width)) 
+        output_strips.append(new_image) 
+        width, height = output_strips[0].size 
+
+
+    return output_strips
+
+
+
+
+
+
+
+
+
+### MAKE GRAPHS ###---------------------------------------
+
+
+def h_bar(my_x,my_heights,my_dir,my_filename,ylim=False):
+    plt.clf()
+    plt.barh(my_x,my_heights)
+
+    #invert y
+    ax = plt.gca() #get current axis
+    ax.invert_yaxis()
+
+    #hide y ticks
+    ax.yaxis.set_ticklabels([])
+    plt.yticks([], [])
+    
+
+    #add threshold
+    if my_x[0] != 0:
+        plt.axvline(x=1,color='blue',lw=1, ls='--')
+
+    #hide frame/border
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    #ax.set_xlabel('Relative Luminescence',fontsize=14)
+
+    #x axis on top
+    ax.xaxis.tick_top()
+
+
+    plt.margins(y=0)
+
+    #set axis if disc array
+    if ylim != False:
+        plt.xlim(0,ylim)
+
+    #plt.show()
+    fig = plt.gcf()
+    spot_no = len(my_x)
+    width = (7.22/20)*spot_no
+    fig.set_size_inches(5, width) #8.37/20 now 7.2/20 per seq, width 6
+
+    my_path = os.path.join(my_dir,my_filename)
+    fig.savefig(my_path, bbox_inches='tight',dpi=100)
+
+
+
+
+
+
+def v_bar(my_x,my_heights,my_dir,my_filename,ylim=False):
+    plt.clf()
+    plt.bar(my_x,my_heights)
+
+    ax = plt.gca() #get current axis    
+
+    #add threshold
+    if my_x[0] != 0:
+        plt.axhline(y=1,color='blue',lw=1, ls='--')
+
+    #hide frame/border
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    #hide y ticks
+    ax.xaxis.set_ticklabels([])
+    plt.xticks([], [])
+
+    #ax.set_xlabel('Relative Luminescence',fontsize=14)
+
+    plt.margins(x=0)
+    #plt.show()
+
+    #set axis if disc array
+    if ylim != False:
+        plt.ylim(0,ylim)
+
+    fig = plt.gcf()
+    spot_no = len(my_x)
+    width = (7.22/20)*spot_no
+    fig.set_size_inches(width,4) #8.37/20 now 7.2/20 per seq, width 6
+    my_path = os.path.join(my_dir,my_filename)
+    fig.savefig(my_path, bbox_inches='tight',dpi=100)
+
+
+def graph_to_ppt(path_list,graph_type_list,ppt_dir='blank'):
+    if ppt_dir == 'blank':
+        prs = Presentation()
+        prs.slide_width = Cm(33.9)
+        prs.slide_height = Cm(19.1)
+        for i in range(len(path_list)):
+            slide = prs.slides.add_slide(prs.slide_layouts[0])
+    else:
+        prs = Presentation(ppt_dir)
+    
+    h_left = Cm(8.7)
+    h_top = Cm(2.2)
+    v_left = Cm(8.4)
+    v_top = Cm(6.5)
+    #width = Cm(0.7)
+    
+    slides_list = [slide.slide_id for slide in prs.slides]
+
+    c=0
+    for i in path_list:
+        #slide = prs.slides.add_slide(prs.slide_layouts[5])
+        slide = prs.slides.get(slides_list[c])
+        if graph_type_list[c] == "h":
+            img = slide.shapes.add_picture(i,h_left,h_top)
+        if graph_type_list[c] == "v":
+            img = slide.shapes.add_picture(i,v_left,v_top)
+        c+=1
+    prs.save('graph_ppt')
+
+
+
+
+def file_compress(inp_file_names, filenames, out_zip_file):
+    compression = zipfile.ZIP_DEFLATED
+    zf = zipfile.ZipFile(out_zip_file, mode="w")
+    try:
+        for i in range(len(inp_file_names)):
+    
+            zf.write(inp_file_names[i], filenames[i], compress_type=compression)
+
+    except FileNotFoundError as e:
+        print('compression error')
+    finally:
+        zf.close()
+
